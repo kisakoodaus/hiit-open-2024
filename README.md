@@ -1,19 +1,9 @@
-# Contest template
+# HIIT Open 2024
 
-Setting up a contest repo based on this template:
-1. Make sure all files are included (e.g. `.gitignore`)
-2. Adjust README.md
-3. Choose translations:
-   - If not planning to use translations, remove `template/statement-*.md` and
-     keep only `statement.md`
-   - Otherwise, add appropriate languages to the template task
+## Links
 
-Cut here
---------
-
-# Contest name
-
-Useful links or info here
+- [Official website](https://open.hiit.fi/)
+- [Contest system](https://cses.fi/510/list/)
 
 ## Workflow for creating a new task
 1. Copy `template/` as `new-task/`.
