@@ -1,0 +1,43 @@
+# Special graphs
+0000 example
+0000 cliques 100
+0000 clique-cliques 100
+# Random graphs
+1001 random 5 8
+1002 random 10 10
+1003 random 10 45
+1004 random 100 45
+1005 random 100 400
+1006 random 100 500
+1007 random 1000 500
+1008 random 1000 5000
+1009 random 1000 10000
+1010 random 1000 1000
+1011 random 100 4000
+# Empty graphs
+2000 random 1 0
+2001 random 10 0
+2002 random 100 0
+2003 random 1000 0
+# Sausage graph. Answer requires close to 3n-1 edges
+3000 sausage 2 3
+3001 sausage 3 3
+3002 sausage 10 3
+3003 sausage 100 3
+3004 sausage 250 3
+3100 sausage 2 4
+3101 sausage 3 4
+3102 sausage 10 4
+3103 sausage 100 4
+3104 sausage 200 4
+# Thin paths are special cases of sausages
+4000 sausage 2 1
+4001 sausage 3 1
+4002 sausage 10 1
+4003 sausage 100 1
+4004 sausage 500 1
+4100 sausage 2 2
+4101 sausage 3 2
+4102 sausage 10 2
+4103 sausage 100 2
+4104 sausage 334 2

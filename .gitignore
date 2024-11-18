@@ -1,0 +1,8 @@
+.~lock.*#
+.direnv
+.devenv
+build/
+tests/
+package.zip
+*.exe
+venv/

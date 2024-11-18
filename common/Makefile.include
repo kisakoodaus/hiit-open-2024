@@ -1,0 +1,89 @@
+BASE_PATH:=$(shell git rev-parse --show-toplevel)
+COMMON_PATH:=$(BASE_PATH)/common
+
+binaries:=$(sort $(binaries) generator checker solver)
+include $(COMMON_PATH)/Makefile.base
+
+TESTS?=$(shell $(COMMON_PATH)/gen-tests.sh tests.txt)
+TESTS:=$(TESTS)
+TEST_GEN_FILES:=$(foreach i, $(TESTS), tests/$(i).gen)
+TEST_IN_FILES:=$(foreach i, $(TESTS), tests/$(i).in)
+TEST_OUT_FILES:=$(foreach i, $(TESTS), tests/$(i).out)
+export SOLUTION?=$(BUILD_PATH)/solver
+CUSTOM_GRADER_SOURCE:=
+DEFAULT_GRADER_NEEDED:=
+ifneq ($(filter grader, $(binaries)), )
+	export GRADER?=$(BUILD_PATH)/grader
+	CUSTOM_GRADER_SOURCE:=grader.cpp
+else ifndef GRADER
+	export GRADER:=$(COMMON_PATH)/default-grader/build/grader
+	DEFAULT_GRADER_NEEDED:=$(GRADER)
+endif
+
+export GENERATOR_BIN:=$(BUILD_PATH)/generator
+export CHECKER_BIN:=$(BUILD_PATH)/checker
+export SOLVER_BIN:=$(BUILD_PATH)/solver
+
+# Never delete these even if they're intermediary files
+.SECONDARY: $(TEST_GEN_FILES) $(TEST_IN_FILES) $(TEST_OUT_FILES)
+
+# These are usually generated automatically, but not in all scenarios
+$(TEST_GEN_FILES) &: tests.txt
+	$(COMMON_PATH)/gen-tests.sh tests.txt > /dev/null
+
+tests/%.in: tests/%.gen $(GENERATOR_BIN) $(CHECKER_BIN)
+	@set -e
+	@echo -- Generating and checking test $* input
+	$(GENERATOR_BIN) $(shell cat $<) > $@.tmp
+	@$(COMMON_PATH)/run-checker.sh $(CHECKER_BIN) $@.tmp
+	mv $@.tmp $@
+
+tests/%.out: tests/%.in tests/%.gen $(SOLVER_BIN)
+	@echo -- Generating test $* output
+	$(SOLVER_BIN) $(shell cat tests/$*.gen) < $< > $@
+
+.PHONY: test-inputs test-outputs
+test-inputs: $(TEST_IN_FILES)
+test-outputs: $(TEST_OUT_FILES)
+
+.PHONY: tests
+tests: test-inputs test-outputs
+
+$(COMMON_PATH)/default-grader/build/grader:
+	$(MAKE) -C $(COMMON_PATH)/default-grader
+
+.PHONY: run-tests
+run-tests: tests all $(DEFAULT_GRADER_NEEDED)
+	@echo -- Running tests on $(SOLUTION) graded by $(GRADER)
+	$(COMMON_PATH)/run-tests.sh $(TESTS)
+
+define PACKAGE_FILES
+checker.cpp statement*.md $(CUSTOM_GRADER_SOURCE) \$ 
+    $(TEST_IN_FILES) $(TEST_OUT_FILES) $(wildcard files/*)
+endef
+
+.PHONY: package package-update
+package: tests
+	@echo -- Packaging $(words $(TESTS)) tests and auxiliary files
+	rm -f package.zip
+	zip package.zip $(PACKAGE_FILES)
+
+package-update: tests
+	@echo -- 'Updating package (extra tests will not be removed)'
+	zip -u package.zip $(PACKAGE_FILES)
+
+# alias
+.PHONY: package-tests
+package-tests: package
+
+.PHONY: clean-tests
+clean-tests:
+	rm tests/*
+
+FMT?=%
+
+.PHONY: brutetest
+brutetest: all $(DEFAULT_GRADER_NEEDED)
+	@echo -- Brute testing $(SOLUTION) against $(SOLVER_BIN) graded by $(GRADER)
+	@echo -- Using FMT=\''$(FMT)'\' to generate tests, % replaced by test no.
+	$(COMMON_PATH)/brutetest.sh '$(FMT)'

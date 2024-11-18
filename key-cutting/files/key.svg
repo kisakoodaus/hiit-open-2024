@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+ <style>.slots { 
+    fill:#000000;
+    font-size:26.6667px;
+}
+.marker-text { fill:#e72525; }
+.marker { fill:none;    stroke:#e72525; }
+.key { fill-opacity:1;    fill:#b29c00; }</style>
+ <g fill="#b29c00">
+  <path d="m75 150-50 130 50 130 125-50v-160zm10 50 45 40v90l-44.856 30-35.144-80z"/>
+  <path d="m200 200v160h275l33.299-80.5-33.299-59.5h-50v60h-50v-60h-50v20h-50v-20h-50v-20z"/>
+ </g>
+ <text class="slots" x="241.8275" y="159.72006" xml:space="preserve"><tspan x="241.8275" y="159.72006">1</tspan></text>
+ <text class="slots" x="290.06247" y="159.89584" xml:space="preserve"><tspan x="290.06247" y="159.89584">2</tspan></text>
+ <text class="slots" x="342.00146" y="159.70705" xml:space="preserve"><tspan x="342.00146" y="159.70705">3</tspan></text>
+ <text class="slots" x="388.30954" y="159.72006" xml:space="preserve"><tspan x="388.30954" y="159.72006">4</tspan></text>
+ <text class="slots" x="441.56631" y="159.53127" xml:space="preserve"><tspan x="441.56631" y="159.53127">5</tspan></text>
+ <path class="marker" d="m495 200h-295" style=""/>
+ <path class="marker" d="m495 220h-295" style=""/>
+ <path class="marker" d="m495 240h-295" style=""/>
+ <path class="marker" d="m495 260h-295" style=""/>
+ <path class="marker " d="m495 280h-295" style=""/>
+ <g font-size="26.667px">
+  <text class="marker-text" x="180.04683" y="229.72006" xml:space="preserve"><tspan x="180.04683" y="229.72006">1</tspan></text>
+  <text class="marker-text" x="159.83179" y="249.89584" xml:space="preserve"><tspan x="159.83179" y="249.89584">2</tspan></text>
+  <text class="marker-text" x="180.33328" y="269.70703" xml:space="preserve"><tspan x="180.33328" y="269.70703">3</tspan></text>
+  <text class="marker-text" x="159.57137" y="289.72006" xml:space="preserve"><tspan x="159.57137" y="289.72006">4</tspan></text>
+  <text class="marker-text" x="159.48022" y="209.70705" xml:space="preserve"><tspan x="159.48022" y="209.70705">0</tspan></text>
+ </g>
+</svg>

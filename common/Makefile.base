@@ -1,0 +1,21 @@
+BASE_PATH?=$(shell git rev-parse --show-toplevel)
+COMMON_PATH?=$(BASE_PATH)/common
+BUILD_PATH?=build
+
+CC=g++
+CFLAGS=-std=c++17 -Wall -Wextra -Wshadow -Werror -Wno-unused-parameter
+CFLAGS+=-Wno-unused-variable -O2 -g
+CFLAGS+=-I "$(COMMON_PATH)/include"
+CFLAGS+=$(CFLAGS_EXTRA)
+
+EXES:=$(sort $(addprefix $(BUILD_PATH)/, $(binaries)))
+
+$(BUILD_PATH)/%: %.cpp
+	@mkdir -p $(BUILD_PATH)
+	$(CC) -o $@ $< $(CFLAGS)
+
+.PHONY: all rebuild clean
+all: $(EXES)
+rebuild: clean all
+clean:
+	rm -f $(EXES)

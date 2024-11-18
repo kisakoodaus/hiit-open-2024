@@ -1,0 +1,8 @@
+-std=c++17
+-Wall
+-Wextra
+-Wshadow
+-Wno-unused-parameter
+-Wno-unused-variable
+-I
+common/include

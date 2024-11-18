@@ -1,0 +1,81 @@
+# Short cycle, few edges, low number of colors
+1000 cycle 5 1 20
+1001 cycle 5 1 100
+1002 cycle 10 1 100
+1010 cycle 5 2 20
+1011 cycle 5 2 100
+1012 cycle 10 2 100
+1020 cycle 5 3 20
+1021 cycle 5 3 100
+1022 cycle 10 3 100
+# Short cycle, many edges, low number of colors
+1100 cycle 5 1 1000
+1101 cycle 10 1 1000
+1110 cycle 5 2 1000
+1111 cycle 10 2 1000
+1120 cycle 5 3 1000
+1121 cycle 10 3 1000
+# Long cycle, many edges, low number of colors
+1200 cycle 100 1 1000
+1201 cycle 100 2 1000
+1202 cycle 100 3 1000
+1210 cycle 300 1 1000
+1211 cycle 300 2 1000
+1212 cycle 300 3 1000
+1220 cycle 500 1 1000
+1221 cycle 500 2 1000
+1222 cycle 500 3 1000
+1230 cycle 800 1 1000
+1231 cycle 800 2 1000
+1232 cycle 800 3 1000
+# Short cycle, many edges, high number of colors
+1300 cycle 10 10 1000
+1301 cycle 30 31 1000
+1302 cycle 50 31 1000
+# Long cycle, many edges, high number of colors
+1400 cycle 100 31 1000
+1401 cycle 300 31 1000
+1402 cycle 500 31 1000
+# Cycle consisting of smaller cycles
+2000 cycle-cycle 100 6 2
+2001 cycle-cycle 90 10 5
+2002 cycle-cycle 90 10 10
+2003 cycle-cycle 45 20 10
+2004 cycle-cycle 24 30 10
+2005 cycle-cycle 24 30 15
+2006 cycle-cycle 15 64 32
+2007 cycle-cycle 9 64 10
+2008 cycle-cycle 15 64 64
+2009 cycle-cycle 200 4 3
+# Lattices
+3000 lattice 2 250 64
+3001 lattice 4 125 64
+3002 lattice 2 250 32
+3003 lattice 4 125 32
+3004 lattice 6 62 64
+3005 lattice 16 32 64
+3005 lattice 32 16 64
+3100 lattice-shuffle 2 250 64
+3101 lattice-shuffle 4 125 64
+3102 lattice-shuffle 2 250 32
+3103 lattice-shuffle 4 125 32
+3104 lattice-shuffle 6 62 64
+3105 lattice-shuffle 16 32 64
+3105 lattice-shuffle 32 16 64
+# Instead of long paths with many colors, use short paths with many colors
+4200 ccycle 100 1 1000
+4201 ccycle 100 2 1000
+4202 ccycle 100 3 1000
+4210 ccycle 300 1 1000
+4211 ccycle 300 2 1000
+4212 ccycle 300 3 1000
+4220 ccycle 500 1 1000
+4221 ccycle 500 2 1000
+4222 ccycle 500 3 1000
+4230 ccycle 800 1 1000
+4231 ccycle 800 2 1000
+4232 ccycle 800 3 1000
+4232 ccycle 800 10 1000
+# Sausage graphs where the optimum is to pick correct sausages
+5200 lcycle
+5201 lcycle2
