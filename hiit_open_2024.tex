@@ -1,0 +1,267 @@
+\documentclass{beamer}
+\title{HIIT Open 2024}
+\usetheme{Boadilla}
+\author{}
+\institute{}
+\date{November 16, 2024}
+
+\usepackage{minted}
+\beamertemplatenavigationsymbolsempty
+\setbeamercolor{page number in head/foot}{fg=white}
+\setbeamercolor{date in head/foot}{fg=white}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Organizers}
+\centering
+\begin{tabular}{ccc}
+     \includegraphics[width=0.15\textwidth]{amirreza.jpg} &
+     \includegraphics[width=0.15\textwidth]{juha.jpg} &
+     \includegraphics[width=0.15\textwidth]{tuukka.jpg} \\
+     Amirreza Akbari & Juha Harviainen & Tuukka Korhonen \\
+     \includegraphics[width=0.15\textwidth]{antti.jpg} &
+     \includegraphics[width=0.15\textwidth]{henrik.jpg} &
+     \includegraphics[width=0.15\textwidth]{jukka.jpg} \\
+     Antti Laaksonen & Henrik Lievonen & Jukka Suomela
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\frametitle{Statistics}
+\begin{itemize}
+    \item 19 teams, 47 contestants
+    \item 327 submissions, 92 accepted
+    \item Each team solved at least one problem
+    \item First accepted solution at 11 last sometime after the freeze
+    \item Shortest accepted solution 77 characters, longest 2225
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{C -- Conspiracies Everywhere (17/19, first at 11 min)}
+
+    \begin{block}{Problem}
+    Pick qualities for the bottom layer of a pyramid such that the top stone has the given quality when the quality of each stone is the sum of the qualities below it. 
+    \end{block}
+    \begin{itemize}
+        \item Each quality has to be positive---at least one
+        \item With $n$ layers, the minimum quality of the top stone is $2^{n - 1}$
+        \item Increasing the quality of the leftmost stone by $x$ increases the quality of the top stone by $x$
+        \item Let other qualities be $1$ and the leftmost stone $q - 2^{n - 1} - 1$
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{K -- Key Cutting (16/19, first at 11 min)}
+    \begin{block}{Problem}
+        Pick intervals $[\ell_i, r_i]$ and depths $d_i$ such that $v_j == \underset{i\,\mathrm{s.t.}\,j \in [\ell_i, r_i]}{\max} d_i$ for the given array $v_j$.
+    \end{block}
+    \begin{itemize}
+        \item Solve recursively for intervals
+        \item When cutting interval $[\ell, r]$, find smallest $v_j$ there and make cut that interval at depth $v_j$
+        \item Now, some intervals within $[\ell, r]$ remain that need further cutting
+        \item With e.g. minimum segment tree, $O(n \log n)$
+        \item A linear time algorithm exists with an approach similar to finding largest rectangle 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{F -- Forgotten Measurements (16/19, first at 79 min)}
+    \begin{block}{Problem}
+        Find the minimum number of fence segments whose lengths are enough for determining the total circumference of the fence.
+    \end{block}
+    \begin{itemize}
+        \item Knowing lengths of segments going to the left determines the total length of horizontal segments
+        \item Similarly for segments going right, up, and down
+        \item Is $\min(\#L, \#R) + \min(\#U, \#D)$ optimal?
+        \item Suppose we have one segment going to left and one going to right whose lengths we do not know
+        \item Removing those segments splits the fence into two parts
+        \item Since the segments don't overlap, the parts are some distance $\epsilon$ apart
+        \item Shift one part to left by distance $\epsilon$
+        \item Total length would increase by $2\epsilon$, but the description of the fence would remain the same
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{J -- Just Do It (9/19, first at 22 min)}
+    \includegraphics[width=\textwidth]{j-wikipedia.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{J -- Just Do It (9/19, first at 22 min)}
+    \begin{block}{Problem}
+        Create a pathological instance for quicksort.
+    \end{block}
+    \begin{itemize}
+        \item Make sure that each step the split is as uneven as possible
+        \item Choose pivot among the two largest elements of the array
+        \pause
+        \item Keep an array of original indices
+        \item Run algorithm, always ensuring uneven split
+        \item Construct a DAG with edges ``$x$ is larger than $y$''
+        \item Topological order of the DAG gives the relative order of elements
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{J -- Just Do It (9/19, first at 22 min)}
+    \begin{block}{Problem}
+        Create a pathological instance for quicksort.
+    \end{block}
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+int main() {
+	int n;
+	cin >> n;
+ 
+	for (int i = 0; i < n; ++i) {
+		cout << (i + 1) % n + 1 << ' ';
+	}
+	cout << endl;
+}
+\end{minted}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{E -- Equilateral Numbers (8/19, first at 78 min)}
+    \begin{block}{Problem}
+        Find the smallest number of triangle numbers with the desired sum.
+    \end{block}
+\begin{itemize}
+    \item Studying the pattern suggests that three triangle numbers always suffice
+    \item Enumerate triangle numbers up to target sum
+    \item Test in $O(\sqrt{n})$ time if the target is a triangle number or a sum of two triangle numbers
+    \item If not, then output $3$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{H -- Hiitism (7/19, first at 74 min)}
+    \begin{block}{Problem}
+        Find a sequence of brushstrokes resulting in the given painting.
+    \end{block}
+    \begin{itemize}
+        \item Construct the sequence backwards
+        \item Find a column or a row that has only a single color
+        \item ``Undo'' that brushstroke
+        \item Find the next column or a row with only a single color, ignoring the colors under the undone brushstrokes
+        \item If colored cell remain in the end, the painting is fake
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{G -- Gerbil's Run (4/19, first at 123 min)}
+    \begin{block}{Problem}
+        Find a set of intervals on a circle such that
+        \begin{itemize}
+            \item for any point in an interval, both points in distance $1$ to clockwise or ccw are not within any interval; and
+            \item for any point outside an interval, either the point in distance $1$ to clockwise or ccw is within an interval
+        \end{itemize}
+    \end{block}
+    \begin{itemize}
+        \item Pick intervals $[0, 1)$, $[2, 3)$, $\dots$ until the last upper bound $u$ is at least $2\pi r - 3$
+        \item If $u$ is at least $2\pi r - 2$, we are done
+        \item Otherwise, shift all intervals but the first one to the right by one
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{L -- Light Rail Connections (1/19, first at 119 min)}
+    \begin{block}{Problem}
+        Keep $3n$ edges such that
+        \begin{itemize}
+            \item connected nodes remain connected; and
+            \item if two nodes would remain connected despite removing any two edges, that should be true after removing the edges
+        \end{itemize}
+    \end{block}
+    \begin{itemize}
+        \item Remove a spanning forest thrice from the graph: at most $3n - 3$ edges
+        \item Connected nodes clearly remain connected
+        \item If $\mathrm{mincut(G, v, u)} \ge 3$, we want to have $\mathrm{mincut(G', v, u)} \ge 3$
+        \item Assume this does not hold and look at disjoint paths $P_1$, $P_2$, and $P_3$ between $v$ and $u$ in $G$
+        \item There were at most $2$ spanning forests with a path between $v$ and $u$; in one of them, they were in separate components
+        \item At least one of the edges in $P_1$, $P_2$, or $P_3$ could have been added
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{B -- Budgetting Bridges (1/19, first at 181 min)}
+    \begin{block}{Problem}
+        For each query, decide if there is a minimum spanning tree containing the given edges.
+    \end{block}
+    \begin{itemize}
+        \item Consider edges of different weights separately in each query
+        \item Consider Kruskal's MST algorithm
+        \item After attempting to add all edges of weight $< w$, the connected components are uniquely determined
+        \item Now, attempt to add edges of weight $w$ in the queries
+        \item Each of them has to merge two disjoint components; if not, the query is invalid
+        \item Implement functionality to undo edge additions to efficiently process the queries
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{D -- Dominoes (0/19)}
+    \begin{block}{Problem}
+        Put domino tiles in a sequence such that consequtive numbers are distinct.
+    \end{block}
+    \begin{itemize}
+        \item No solution exists iff tiles are of the form $(x, y)$ and $(y, x)$
+        \item Otherwise, always solvable
+        \item Merge tiles as long as you can, e.g., $(x, y) + (z, a)$ becomes $(x, a)$
+        \item We are left with a tile $(x, y)$, and possibly several tiles $(y, x)$ if $x \neq y$
+        \item Since $x \neq y$, we can move the rightmost tile in the sequence creating $(x, y)$ to be its leftmost tile instead
+        \item We have at least three different types of tiles, so rotating the sequence creating $(x, y)$ sufficiently many times results in a merged tile distinct from $(x, y)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{A -- Adventure (0/19)}
+    \begin{block}{Problem}
+    Find a multicolored cycle that uses at most twice the minimum possible number of colors. 
+    \end{block}
+    \begin{itemize}
+        \item Guess one of the nodes of the cycle
+        \item Compute shortest paths to other nodes using the number of colors as the distance
+        \item When BFS/Dijkstra tries to arrive to a node the second time, you have found two distinct short paths
+        \item Their union has a cycle
+        \item If starting node was part of the cycle, it used at most twice the optimal number of colors
+        \item Repeat for all starting nodes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{I -- Inheritance (0/19)}
+    \begin{block}{Problem}
+        Find two disjoint subsets with the same sum.
+    \end{block}
+    \begin{itemize}
+        \item A solution always exists by the pigeonhole principle: sums at most $2^{n} - 2$ but $2^{n} - 1$ nonempty subsets
+        \item How many subsets are there whose sum is between $[\ell, r]$?
+        \item Solvable in $O(2^{n/2} n)$ by splitting the items in two halves
+        \item For both halves, compute sums of all subsets and sort them
+        \item Count with e.g. two pointers
+        \item If $[\ell, (\ell + r) / 2]$ has more than $(\ell + r) / 2 - \ell$ subsets, recurse there
+        \item Otherwise recurse to $[(\ell + r) / 2 + 1, r]$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Results}
+    \begin{itemize}
+        \item<2-> Third place: \only<3->{[table flip meme] (7/12, time 845)} 
+        \item<4-> Second place: \only<5->{Aalto CS-A1140 Team 2 (8/12, time 1231)}
+        \item<6-> Winner: \only<7->{Barren plateau (8/12, time 808)}
+    \end{itemize}
+\end{frame}
+
+\end{document}
